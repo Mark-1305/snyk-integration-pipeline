@@ -20,9 +20,9 @@ pipeline{
         stage('Snyk Testing'){
             steps{
                 script{
-                    snykTokenId: 'snyk-api-token {
+                    
                     sh "snyk test -d --all-projects"
-                   }
+                   
                 }
               }
             }
