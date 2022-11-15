@@ -13,15 +13,14 @@ pipeline{
                     snykSecurity failOnError: false, 
                     monitorProjectOnBuild: false, severity: 'high', 
                     snykInstallation: 'snyk_test', 
-                    snykTokenId: 'snyk-api-token'{
+                    snykTokenId: 'snyk-api-token'
                  }
+              }
            }
         stage('Snyk Testing'){
             steps{
                 sh "snyk test -d --all-projects"
                 }
             }
-        }
-       }
+         }
     }
-}
