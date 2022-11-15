@@ -10,9 +10,7 @@ pipeline{
         stage('Snyk-Test'){
             steps{
                 script{
-                    snykSecurity failOnError: false, monitorProjectOnBuild: false, severity: 'high', snykInstallation: 'snyk_test', snykTokenId: 'snyk-api-token'{
-                        sh "snyk test -d "
-                        }                    
+                    snykSecurity failOnError: false, monitorProjectOnBuild: false, severity: 'high', snykInstallation: 'snyk_test', snykTokenId: 'snyk-api-token'                
                     }
                  }
            }      
