@@ -7,6 +7,12 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/Mark-1305/snyk-integration-pipeline.git'
             }
         }
+        stage('Test Build Requirements') {
+            steps {
+                sh 'java -version'
+                sh 'mvn -v'
+            }
+        }
         stage('Unit Testing'){
             steps{
                 sh 'mvn test'
@@ -17,11 +23,16 @@ pipeline{
                 sh 'mvn verify -DskipUnitTests '
             }
         }
-        stage('Maven Build'){
+        stage('Maven Clean'){
             steps{
                 sh 'mvn clean install'
             }
-        } 
+        }
+        stage('Maven Build'){
+            steps{
+                sh 'mvn package'
+            }
+        }  
         stage('Snyk-Test'){
             steps{
                 script{
@@ -36,11 +47,10 @@ pipeline{
         stage('Snyk Testing'){
             steps{
                 script{                    
-                    sh "snyk test -d --all-projects"
+                    sh './snyk test -d --all-projects'
                    
                 }
             }
-        }
-        
+        }       
     }
 } 
