@@ -33,7 +33,7 @@ pipeline{
                 sh 'mvn package'
             }
         }  
-        stage('Snyk-Test'){
+        stage('Snyk-Authentication'){
             steps{
                 script{
                     snykSecurity failOnError: false, 
