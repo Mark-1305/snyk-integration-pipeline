@@ -4,27 +4,43 @@ pipeline{
     stages{
         stage('Git Checkout'){
             steps{
-                git branch: 'main', url: 'https://github.com/Mark-1305/snyk-integration-pipeline'
+                git branch: 'main', url: 'https://github.com/Mark-1305/counter-app.git'
             }
         }
+        stage('Unit Testing'){
+            steps{
+                sh 'mvn test'
+            }
+        } 
+        stage('Integration Test'){
+            steps{
+                sh 'mvn verify -DskipUnitTests '
+            }
+        }
+        stage('Maven Build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        } 
         stage('Snyk-Test'){
             steps{
                 script{
                     snykSecurity failOnError: false, 
-                    monitorProjectOnBuild: false, severity: 'high', 
+                    monitorProjectOnBuild: false, 
+                    severity: 'high', 
                     snykInstallation: 'snyk_test', 
                     snykTokenId: 'snyk-api-token'
+                    }
                  }
-              }
            }
         stage('Snyk Testing'){
             steps{
-                script{
-                    
+                script{                    
                     sh "snyk test -d --all-projects"
                    
                 }
-              }
             }
-         }
+        }
+        
     }
+} 
